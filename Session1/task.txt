@@ -1,0 +1,11 @@
+Convert the Admin Panel Template into Laravel Layout (using layouts/admin.blade.php)
+Create the following routes
+/admin => contains blank view with (your name & your email address)
+/admin/categories => contains categories table with dummy add,edit and delete buttons
+
+Create AdminController.php
+
+Submit the task on github link that contains only the following files:
+1. routes/web.php
+2. app/Http/Controllers/AdminController.php
+3. 2 Screenshots for the 2 routes
