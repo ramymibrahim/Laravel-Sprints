@@ -1,0 +1,4 @@
+Research task about:
+    Validation rules
+
+Complete the Admin/Products pages with the admin panel you've created from task #1
