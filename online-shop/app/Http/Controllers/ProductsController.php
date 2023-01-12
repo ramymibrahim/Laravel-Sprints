@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
+use App\Models\Size;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ProductsController extends Controller
 {
@@ -13,9 +16,14 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+
+    }
+
     public function index()
     {
-        //
         return view('admin.products.index')->with('products', Product::paginate(10));
     }
 
@@ -28,7 +36,13 @@ class ProductsController extends Controller
     {
         //
         $categories = Category::all();
-        return view('admin.products.create',compact('categories'));
+        $colors = Color::all();
+        $sizes = Size::all();
+        return view('admin.products.create')->with([
+            'categories' => $categories,
+            'sizes' => $sizes,
+            'colors' => $colors
+        ]);
     }
 
     /**
@@ -41,8 +55,19 @@ class ProductsController extends Controller
     {
         //
         $request->validate(Product::$rules);
-        
-        dd($request->post());
+
+        $imageUrl = $request->file('image')->store('products', ['disk' => 'public']);
+        $product = new Product;
+
+        $product->fill($request->post());
+        $product['image'] = $imageUrl;
+        $product['rating'] = 0;
+        $product['rating_count'] = 0;
+        $product['is_recent'] = $request['is_recent'] ? 1 : 0;
+        $product['is_featured'] = $request['is_featured'] ? 1 : 0;
+
+        $product->save();
+        return redirect()->route('products.index');
     }
 
     /**

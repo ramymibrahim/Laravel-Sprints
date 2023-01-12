@@ -1,0 +1,4 @@
+Research task about:
+    eloquent model
+
+Create checkout page and add values from session

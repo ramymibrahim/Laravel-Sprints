@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,16 +18,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/add-product', [HomeController::class, 'add_product']);
 Route::get('/shop', [HomeController::class, 'shop']);
 
-Route::prefix('/admin')->group(function () {
-    Route::get('categories', [CategoriesController::class, 'index']);
-    Route::post('categories', [CategoriesController::class, 'store'])->name('admin.categories');
-    Route::get('categories/create', [CategoriesController::class, 'create']);
-    Route::get('categories/{id}/edit', [CategoriesController::class, 'edit']);
-    Route::put('categories/{id}', [CategoriesController::class, 'update']);
-    Route::get('categories/{id}', [CategoriesController::class, 'show']);
-    Route::delete('categories/{id}', [CategoriesController::class, 'destroy']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__ . '/auth.php';
+
+Route::middleware(['auth', 'can:is_admin'])->prefix('/admin')->group(function () {
     Route::resource('products', ProductsController::class);
+    Route::resource('categories', CategoriesController::class);
 });
