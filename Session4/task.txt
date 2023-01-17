@@ -1,0 +1,6 @@
+Complete the project with admin panel and fill the missing tasks
+    e.g. Get Categories with product count in home page
+    Create orders page in admin panel to view all the orders
+
+The task should be submited in separate github repository with the laravel application as
+the main files not zipped 

@@ -14,7 +14,6 @@ class HomeController extends Controller
     //
     function index()
     {
-
         return view('index')->with([
             'categories' => Category::all(),
             'products' => Product::all()
@@ -61,6 +60,8 @@ class HomeController extends Controller
         price between 100 and 200
         )
         */
+
+        $query = $query->orderByDesc('created_at');
         $products = $query->paginate(9);
 
 
