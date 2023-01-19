@@ -204,7 +204,7 @@
                     id: id
                 },
                 success: (data) => {
-                    console.log(data);
+                    $('#product_count').html(data);
                 }
             })
         }

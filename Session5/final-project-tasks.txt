@@ -1,0 +1,26 @@
+In main header: show sign-in menu or welcome {username} when needed => auth()->user()
+redirect to index.php (Done)
+Product Details
+    Review -> visible to the authenticated users only, use { Auth::user() inside the controller}
+    create reviews Table
+    update rating & rating count when new review is added rating = (old_rating*rating_count + new_rating)/rating_count+1
+Cart
+    Get product ids from session and display cart lines (order details)
+    Order , OrderDetails as Models -> create needed functions inside the model
+Checkout
+    guard check out
+
+Love button
+    Ajax
+Sign up to Newsletter
+    Ajax
+admin 
+    Products
+    Orders
+    Users
+
+Use partial view in laravel
+Active Route in menu
+    Search
+Product Stars
+    partial view

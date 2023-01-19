@@ -7,6 +7,7 @@ use App\Models\Color;
 use App\Models\Product;
 use App\Models\Size;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
@@ -14,6 +15,7 @@ class HomeController extends Controller
     //
     function index()
     {
+        
         return view('index')->with([
             'categories' => Category::all(),
             'products' => Product::all()
@@ -78,7 +80,7 @@ class HomeController extends Controller
             $ids = Session::get('ids', []);
             array_push($ids, $request->get('id'));
             Session::put('ids', $ids);
-            return response()->json('Data addedd successfully');
+            return response()->json(count($ids));
         }
         return abort(404);
     }
