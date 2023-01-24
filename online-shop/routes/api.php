@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\ProductsController;
+use App\Http\Controllers\api\CategoriesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,10 +19,17 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+Route::get('/get_categories', [CategoriesController::class, 'get_categories']);
+Route::prefix('products')->group(function () {
+    Route::get('/', [ProductsController::class, 'index']);
+    Route::get('getFeatured', [ProductsController::class, 'getFeatured']);
+    Route::get('getRecent', [ProductsController::class, 'getRecent']);
+});
 
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('products', [ProductsController::class, 'index']);
+    Route::resource('categories', CategoriesController::class);
     Route::post('logout', [AuthController::class, 'logout']);
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
